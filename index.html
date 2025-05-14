@@ -1,170 +1,504 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <!-- Google tag (gtag.js) -->
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R31EZVFSXF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google Tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R31EZVFSXF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-R31EZVFSXF');
+  </script>
 
-  gtag('config', 'G-R31EZVFSXF');
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Burger Restaurant</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        /* Background styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to right, #ffcc00, #ff9966);
-            color: #333;
-        }
-
-        .header { background-color: #ffcc00; padding: 20px; text-align: center; }
-        .nav { display: flex; justify-content: center; align-items: center; background-color: #333; }
-        .nav a { color: white; padding: 14px 20px; text-decoration: none; text-align: center; display: flex; align-items: center; gap: 8px; }
-        .nav a:hover { background-color: #ddd; color: black; }
-        .nav a i { font-size: 18px; }
-        .content { padding: 20px; text-align: center; }
-        .footer { background-color: #333; color: white; text-align: center; padding: 10px; position: fixed; width: 100%; bottom: 0; }
-        @media (max-width: 600px) {
-            .nav { flex-direction: column; }
-        }
-        .menu-item { display: none; }
-        .menu-item.visible { display: block; }
-        .animated { animation: fadeIn 1s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Form styling */
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            margin: 20px auto;
-        }
-
-        form label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        form input[type="text"],
-        form input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        form input[type="submit"] {
-            background-color: #ff9966;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        form input[type="submit"]:hover {
-            background-color: #ffcc00;
-        }
-
-        ul {
-            list-style-type: circle;
-            padding-left: 20px;
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Dynamic greeting based on time
-            const greeting = document.getElementById('greeting');
-            const hour = new Date().getHours();
-            if (hour < 12) {
-                greeting.textContent = 'Good Morning!';
-            } else if (hour < 18) {
-                greeting.textContent = 'Good Afternoon!';
-            } else {
-                greeting.textContent = 'Good Evening!';
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Burger Restaurant - Swaad</title>
+  
+  <!-- Google Fonts for creative typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- jQuery for smooth scrolling and interactions -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <style>
+    :root {
+      --primary-color: #FF9966;
+      --secondary-color: #ffcc00;
+      --dark-color: #333;
+      --light-color: #fff;
+      --font-header: 'Lobster', cursive;
+      --font-body: 'Roboto', sans-serif;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: var(--font-body);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      line-height: 1.6;
+      color: var(--dark-color);
+      overflow-x: hidden;
+    }
+    
+    header, section, footer {
+      padding: 60px 20px;
+    }
+    
+    /* Hero Section with Animated Background */
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: url('https://source.unsplash.com/1600x900/?burger') no-repeat center center/cover;
+    }
+    
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      animation: pulse 5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 0.7; }
+      100% { opacity: 0.5; }
+    }
+    
+    .hero-content {
+      position: relative;
+      color: var(--light-color);
+      font-family: var(--font-header);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+    
+    .hero-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .hero-content h1 {
+      font-size: 4rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    
+    /* Bouncing Scroll Down Arrow */
+    .scroll-down {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--light-color);
+      font-size: 2rem;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+    
+    .btn {
+      display: inline-block;
+      background: var(--primary-color);
+      color: var(--light-color);
+      padding: 15px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: background 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: var(--secondary-color);
+    }
+    
+    /* Navigation Styles */
+    .nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(51, 51, 51, 0.9);
+      display: flex;
+      justify-content: center;
+      z-index: 999;
+      padding: 10px 0;
+    }
+    
+    .nav a {
+      color: var(--light-color);
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .nav a:hover {
+      color: var(--secondary-color);
+    }
+    
+    /* Section Title Styling */
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      font-family: var(--font-header);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+    
+    .section-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Menu Section Styling */
+    .menu-section {
+      background: var(--light-color);
+      border-top-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+      padding: 40px;
+      margin: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-out;
+    }
+    
+    .menu-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .menu-filter {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .menu-filter input[type="text"] {
+      padding: 10px 15px;
+      width: 80%;
+      max-width: 400px;
+      border: 2px solid var(--primary-color);
+      border-radius: 30px;
+      font-size: 1rem;
+    }
+    
+    .menu-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      list-style: none;
+      padding: 0;
+    }
+    
+    .menu-item {
+      background: var(--secondary-color);
+      color: var(--light-color);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease-out;
+    }
+    
+    .menu-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Video Section Styling */
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      margin: 40px auto;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-out;
+    }
+    
+    .video-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* Form Styling */
+    .form-container {
+      background: var(--light-color);
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 500px;
+      margin: 30px auto;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-out;
+    }
+    
+    .form-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .form-container form {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-container label {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    .form-container input[type="text"],
+    .form-container input[type="file"] {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    
+    .form-container input[type="submit"] {
+      padding: 15px;
+      border: none;
+      border-radius: 50px;
+      background: var(--primary-color);
+      color: var(--light-color);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .form-container input[type="submit"]:hover {
+      background: var(--secondary-color);
+    }
+    
+    /* Footer Styling */
+    footer {
+      background: var(--dark-color);
+      color: var(--light-color);
+      text-align: center;
+      padding: 20px;
+    }
+    
+    footer .social-icons a {
+      color: var(--light-color);
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: transform 0.3s;
+    }
+    
+    footer .social-icons a:hover {
+      transform: scale(1.2);
+    }
+    
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 3rem;
+      }
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+      .nav a {
+        font-size: 1rem;
+        padding: 8px 15px;
+      }
+    }
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Dynamic greeting based on time
+      const greetingElem = document.getElementById('greeting');
+      const hour = new Date().getHours();
+      let message = hour < 12 ? "Good Morning!" :
+                    hour < 18 ? "Good Afternoon!" : "Good Evening!";
+      if(greetingElem) greetingElem.textContent = message;
+      
+      // Use Intersection Observer if available; otherwise, fall back to jQuery scroll
+      if ('IntersectionObserver' in window) {
+        const animateOnScroll = document.querySelectorAll('.animate-on-scroll, .section-title, .menu-item, .menu-section, .video-container, .form-container');
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if(entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
             }
-
-            // Menu filter functionality
-            const filterInput = document.getElementById('menu-filter');
-            const menuItems = document.querySelectorAll('.menu-item');
-            filterInput.addEventListener('input', () => {
-                const filter = filterInput.value.toLowerCase();
-                menuItems.forEach(item => {
-                    if (item.textContent.toLowerCase().includes(filter)) {
-                        item.classList.add('visible');
-                    } else {
-                        item.classList.remove('visible');
-                    }
-                });
-            });
+          });
+        }, { threshold: 0.1 });
+        animateOnScroll.forEach(elem => observer.observe(elem));
+      } else {
+        // Fallback using jQuery scroll event
+        $(window).on('scroll', function() {
+          $('.animate-on-scroll, .section-title, .menu-item, .menu-section, .video-container, .form-container').each(function() {
+            let elemPos = $(this).offset().top;
+            let scrollPos = $(window).scrollTop();
+            let winHeight = $(window).height();
+            if (elemPos < scrollPos + winHeight - 100) {
+              $(this).addClass('visible');
+            }
+          });
         });
-
-        $(document).ready(function () {
-            // Add animation to menu items
-            $('.menu-item').addClass('animated');
-
-            // Smooth scroll for navigation links
-            $('.nav a').on('click', function (e) {
-                e.preventDefault();
-                const target = $(this).attr('href');
-                $('html, body').animate({
-                    scrollTop: $(target).offset().top
-                }, 1000);
-            });
+      }
+      
+      // Make hero content visible immediately
+      const heroContent = document.querySelector('.hero-content');
+      if (heroContent) heroContent.classList.add('visible');
+      
+      // Menu filter functionality
+      const filterInput = document.getElementById('menu-filter');
+      const menuItems = document.querySelectorAll('.menu-item');
+      if(filterInput) {
+        filterInput.addEventListener('input', () => {
+          const filter = filterInput.value.toLowerCase();
+          menuItems.forEach((item, index) => {
+            if (item.textContent.toLowerCase().includes(filter)) {
+              item.classList.add('visible');
+              item.style.transitionDelay = (index * 0.1) + 's';
+            } else {
+              item.classList.remove('visible');
+              item.style.transitionDelay = '0s';
+            }
+          });
         });
-    </script>
+      }
+    });
+    
+    $(document).ready(function () {
+      // Smooth scrolling for nav links and scroll arrow
+      $('.nav a, .scroll-down').on('click', function (e) {
+        e.preventDefault();
+        const target = $(this).attr('href') || '#menu';
+        $('html, body').animate({
+          scrollTop: $(target).offset().top - 60
+        }, 1000);
+      });
+      
+      // Stagger animation for menu items on load if needed
+      $('.menu-item').each(function(i){
+        $(this).delay(i * 100).queue(function(next){
+          $(this).addClass('visible');
+          next();
+        });
+      });
+    });
+  </script>
 </head>
 <body>
-    <div class="header">
-        <h1>Welcome to My Cafe "Swaad"</h1>
-        <p id="greeting"></p>
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="#home"><i class="fas fa-home"></i> Home</a>
+    <a href="#menu"><i class="fas fa-utensils"></i> Menu</a>
+    <a href="#video"><i class="fas fa-video"></i> Video</a>
+    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+  </nav>
+  
+  <!-- Hero Section -->
+  <header id="home" class="hero">
+    <div class="hero-content">
+      <h1>Welcome to Swaad</h1>
+      <p id="greeting">Hello!</p>
+      <a href="#menu" class="btn">Explore Our Menu</a>
     </div>
-    <div class="nav">
-        <a href="#home"><i class="fas fa-home"></i>Home</a>
-        <a href="#menu"><i class="fas fa-utensils"></i>Menu</a>
-        <a href="#contact"><i class="fas fa-envelope"></i>Contact</a>
+    <div class="scroll-down"><i class="fas fa-angle-down"></i></div>
+  </header>
+  
+  <!-- Menu Section -->
+  <section id="menu" class="animate-on-scroll">
+    <h2 class="section-title">Our Delicious Menu</h2>
+    <div class="menu-section">
+      <div class="menu-filter">
+        <input type="text" id="menu-filter" placeholder="Search menu items...">
+      </div>
+      <ul class="menu-items">
+        <li class="menu-item">Cheeseburger</li>
+        <li class="menu-item">Veggie Burger</li>
+        <li class="menu-item">Chicken Burger</li>
+        <li class="menu-item">Fish Burger</li>
+        <li class="menu-item">Bacon Burger</li>
+        <li class="menu-item">Double Decker</li>
+      </ul>
     </div>
-    <div class="content">
-        <h2>Our Menu</h2>
-        <p>Check out our delicious burgers!</p>
-        <input type="text" id="menu-filter" placeholder="Search menu items..." />
-        <ul list-style-type="circle">
-            <li class="menu-item visible">Cheeseburger</li>
-            <li class="menu-item visible">Veggie Burger</li>
-            <li class="menu-item visible">Chicken Burger</li>
-            <li class="menu-item visible">Fish Burger</li>
-        </ul>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/szvRvkQRyGg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <button onclick="alert('Order Now!')">Order Now</button>
-        <form action="/submit" method="post">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name">
-            <input type="submit" value="Submit">
-        </form>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <label for="file">Upload a file:</label>
-            <input type="file" id="file" name="file">
-            <input type="submit" value="Upload">
-        </form>
+  </section>
+  
+  <!-- Video Section -->
+  <section id="video" class="animate-on-scroll">
+    <h2 class="section-title">Our Story in Motion</h2>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/szvRvkQRyGg" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
+  </section>
+  
+  <!-- Contact & Forms Section -->
+  <section id="contact" class="animate-on-scroll">
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="form-container">
+      <form action="/submit" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    <div class="form-container">
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="file">Upload a file:</label>
+        <input type="file" id="file" name="file">
+        <input type="submit" value="Upload">
+      </form>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Swaad. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-square"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter-square"></i></a>
+    </div>
+  </footer>
 </body>
 </html>
-
-
