@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Menu - Swaad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { font-family: 'Roboto', sans-serif; background: #fffbe6; margin: 0; }
+    header { background: #FF9966; color: #fff; padding: 30px 0; text-align: center; font-family: 'Lobster', cursive; }
+    .order-section { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 20px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); padding: 30px; }
+    .menu-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; list-style: none; padding: 0; }
+    .menu-item { background: #ffcc00; color: #333; border-radius: 10px; padding: 20px; text-align: center; font-weight: bold; }
+    .menu-item button { margin-top: 10px; background: #FF9966; color: #fff; border: none; border-radius: 20px; padding: 8px 20px; cursor: pointer; font-size: 1rem; }
+    .menu-item button:hover { background: #ffcc00; color: #333; }
+    .cart { margin-top: 40px; background: #f9f9f9; border-radius: 10px; padding: 20px; }
+    .cart h3 { margin-top: 0; }
+    .cart ul { list-style: none; padding: 0; }
+    .cart li { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .cart button { margin-left: 8px; border: none; border-radius: 10px; background: #FF9966; color: #fff; padding: 2px 10px; cursor: pointer; }
+    .cart button:hover { background: #ffcc00; color: #333; }
+    .checkout-form { margin-top: 30px; }
+    .checkout-form label { display: block; margin-top: 10px; font-weight: bold; }
+    .checkout-form input, .checkout-form select { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px; }
+    .checkout-form button[type="submit"] { background: #FF9966; color: #fff; border: none; border-radius: 20px; padding: 10px 0; width: 100%; font-size: 1.1rem; cursor: pointer; }
+    .checkout-form button[type="submit"]:hover { background: #ffcc00; color: #333; }
+    .success-message { color: green; margin-top: 15px; text-align: center; }
+    .nav { background: #333; padding: 10px 0; text-align: center; }
+    .nav a { color: #fff; margin: 0 15px; text-decoration: none; font-size: 1.1rem; }
+    .nav a:hover { color: #FF9966; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="order.html"><i class="fas fa-shopping-cart"></i> Order</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+  </nav>
+  <header>
+    <h1>Order Your Food</h1>
+    <p>Choose your favorite items and checkout!</p>
+  </header>
+  <section class="order-section">
+    <h2>Menu</h2>
+    <ul class="menu-list" id="menu-list">
+      <li class="menu-item">Cheeseburger<br>₹120<br><button data-item="Cheeseburger">Add to Cart</button></li>
+      <li class="menu-item">Veggie Burger<br>₹100<br><button data-item="Veggie Burger">Add to Cart</button></li>
+      <li class="menu-item">Panner Burger<br>₹130<br><button data-item="Panner Burger">Add to Cart</button></li>
+      <li class="menu-item">Salad Burger<br>₹140<br><button data-item="Salad Burger">Add to Cart</button></li>
+      <li class="menu-item">Crisp Burger<br>₹150<br><button data-item="Crisp Burger">Add to Cart</button></li>
+      <li class="menu-item">Double Decker<br>₹160<br><button data-item="Double Decker">Add to Cart</button></li>
+    </ul>
+    <div class="cart" id="cart-section" style="display:none;">
+      <h3>Your Cart</h3>
+      <ul id="cart-items"></ul>
+      <div id="cart-total"></div>
+      <button id="checkout-btn">Checkout</button>
+    </div>
+    <form class="checkout-form" id="checkout-form" style="display:none;">
+      <h3>Checkout</h3>
+      <label for="customer-name">Name:</label>
+      <input type="text" id="customer-name" name="customer-name" required>
+      <label for="customer-email">Email:</label>
+      <input type="email" id="customer-email" name="customer-email" required>
+      <label for="customer-address">Address:</label>
+      <input type="text" id="customer-address" name="customer-address" required>
+      <label for="payment-method">Payment Method:</label>
+      <select id="payment-method" name="payment-method" required>
+        <option value="card">Credit/Debit Card</option>
+        <option value="upi">UPI</option>
+        <option value="cod">Cash on Delivery</option>
+      </select>
+      <div id="payment-details"></div>
+      <button type="submit">Place Order</button>
+      <div class="success-message" id="order-success" style="display:none;">Order placed successfully!</div>
+    </form>
+  </section>
+  <script>
+    // Wait for DOM to be fully loaded before attaching event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuPrices = {
+        'Cheeseburger': 120,
+        'Veggie Burger': 100,
+        'Panner Burger': 130,
+        'Salad Burger': 140,
+        'Crisp Burger': 150,
+        'Double Decker': 160
+      };
+      let cart = [];
+      function updateCart() {
+        const cartSection = document.getElementById('cart-section');
+        const cartItemsElem = document.getElementById('cart-items');
+        const cartTotalElem = document.getElementById('cart-total');
+        cartItemsElem.innerHTML = '';
+        let total = 0;
+        cart.forEach((item, idx) => {
+          total += item.price * item.qty;
+          const li = document.createElement('li');
+          li.innerHTML = `${item.name} x ${item.qty} <span>₹${item.price * item.qty}</span>`;
+          const minusBtn = document.createElement('button');
+          minusBtn.textContent = '-';
+          minusBtn.onclick = () => { if(item.qty>1){ item.qty--; } else { cart.splice(idx,1); } updateCart(); };
+          const plusBtn = document.createElement('button');
+          plusBtn.textContent = '+';
+          plusBtn.onclick = () => { item.qty++; updateCart(); };
+          const removeBtn = document.createElement('button');
+          removeBtn.textContent = 'x';
+          removeBtn.onclick = () => { cart.splice(idx,1); updateCart(); };
+          li.appendChild(minusBtn);
+          li.appendChild(plusBtn);
+          li.appendChild(removeBtn);
+          cartItemsElem.appendChild(li);
+        });
+        cartTotalElem.textContent = 'Total: ₹' + total;
+        cartSection.style.display = cart.length ? 'block' : 'none';
+        // Show checkout form if cart is emptied during checkout
+        if(cart.length === 0) {
+          document.getElementById('checkout-form').style.display = 'none';
+          document.getElementById('checkout-btn').style.display = 'block';
+        }
+      }
+      document.querySelectorAll('.menu-item button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.getAttribute('data-item');
+          const found = cart.find(i => i.name === item);
+          if(found) { found.qty++; } else { cart.push({name: item, qty: 1, price: menuPrices[item]}); }
+          updateCart();
+        });
+      });
+      document.getElementById('checkout-btn').onclick = () => {
+        if(cart.length === 0) return;
+        document.getElementById('checkout-form').style.display = 'block';
+        document.getElementById('checkout-btn').style.display = 'none';
+      };
+      document.getElementById('checkout-form').onsubmit = function(e) {
+        e.preventDefault();
+        document.getElementById('order-success').style.display = 'block';
+        setTimeout(() => {
+          cart = [];
+          updateCart();
+          document.getElementById('checkout-form').reset();
+          document.getElementById('checkout-form').style.display = 'none';
+          document.getElementById('checkout-btn').style.display = 'block';
+          document.getElementById('order-success').style.display = 'none';
+        }, 2000);
+      };
+      document.getElementById('payment-method').onchange = function() {
+        const val = this.value;
+        const details = document.getElementById('payment-details');
+        if(val === 'card') {
+          details.innerHTML = '<label>Card Number:</label><input type="text" required><label>Expiry:</label><input type="text" required placeholder="MM/YY"><label>CVV:</label><input type="password" required maxlength="4">';
+        } else if(val === 'upi') {
+          details.innerHTML = '<label>UPI ID:</label><input type="text" required placeholder="your@upi">';
+        } else {
+          details.innerHTML = '';
+        }
+      };
+      // Always update cart on page load
+      updateCart();
+    });
+  </script>
+  </body>
+</html>
