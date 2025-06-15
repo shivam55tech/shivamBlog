@@ -102,7 +102,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       margin-bottom: 20px;
     }
     
-    .btn {
+    .btn, .form-container input[type="submit"] {
       display: inline-block;
       background: var(--primary-color);
       color: var(--light-color);
@@ -110,11 +110,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       border-radius: 50px;
       text-decoration: none;
       font-size: 1.1rem;
-      transition: background 0.3s ease;
+      transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(255,153,102,0.15);
+      cursor: pointer;
+      outline: none;
     }
     
-    .btn:hover {
+    .btn:active, .form-container input[type="submit"]:active {
+      transform: scale(0.97);
+      box-shadow: 0 1px 4px rgba(255,153,102,0.10);
+    }
+    
+    .btn:focus, .form-container input[type="submit"]:focus {
+      outline: 2px solid var(--secondary-color);
+    }
+    
+    .btn:hover, .form-container input[type="submit"]:hover {
       background: var(--secondary-color);
+      color: var(--dark-color);
+      box-shadow: 0 4px 16px rgba(255,204,0,0.18);
+      transform: translateY(-2px) scale(1.03);
+    }
+    
+    html {
+      scroll-behavior: smooth;
     }
     
     /* Navigation Styles */
@@ -261,21 +280,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       font-size: 1rem;
     }
     
-    .form-container input[type="submit"] {
-      padding: 15px;
-      border: none;
-      border-radius: 50px;
-      background: var(--primary-color);
-      color: var(--light-color);
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    
-    .form-container input[type="submit"]:hover {
-      background: var(--secondary-color);
-    }
-    
     /* Footer Styling */
     footer {
       background: var(--dark-color);
@@ -346,11 +350,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     $(document).ready(function () {
       // Smooth scrolling on nav click
       $('.nav a').on('click', function (e) {
-        e.preventDefault();
-        const target = $(this).attr('href');
-        $('html, body').animate({
-          scrollTop: $(target).offset().top - 60
-        }, 1000);
+        if(this.hash && this.hash.startsWith('#')) {
+          e.preventDefault();
+          const target = $(this).attr('href');
+          $('html, body').animate({
+            scrollTop: $(target).offset().top - 60
+          }, 1000);
+        }
       });
       
       // Staggered animation for menu items on page load
@@ -370,12 +376,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <!-- Navigation -->
   <nav class="nav">
-    <a href="#home"><i class="fas fa-home"></i> Home</a>
-    <a href="#menu"><i class="fas fa-utensils"></i> Menu</a>
-    <a href="#video"><i class="fas fa-video"></i> Video</a>
-    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="order.html"><i class="fas fa-shopping-cart"></i> Order</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
   </nav>
-  
   <!-- Hero Section -->
   <header id="home" class="hero">
     <div class="hero-content">
@@ -384,10 +388,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="#menu" class="btn">Explore Our Menu</a>
     </div>
   </header>
-  
   <!-- Menu Section -->
   <section id="menu">
     <h2 class="section-title">Our Delicious Menu</h2>
+    <a href="order.html" class="btn" style="display:block;max-width:220px;margin:0 auto 30px auto;text-align:center;">Order Online</a>
     <div class="menu-section">
       <div class="menu-filter">
         <input type="text" id="menu-filter" placeholder="Search menu items...">
@@ -395,14 +399,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <ul class="menu-items">
         <li class="menu-item">Cheeseburger</li>
         <li class="menu-item">Veggie Burger</li>
-        <li class="menu-item">Chicken Burger</li>
-        <li class="menu-item">Fish Burger</li>
-        <li class="menu-item">Bacon Burger</li>
+        <li class="menu-item">Paneer Burger</li>
+        <li class="menu-item">Salad Burger</li>
+        <li class="menu-item">Crisp Burger</li>
         <li class="menu-item">Double Decker</li>
       </ul>
     </div>
   </section>
-  
   <!-- Video Section -->
   <section id="video">
     <h2 class="section-title">Our Story in Motion</h2>
@@ -410,26 +413,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <iframe src="https://www.youtube.com/embed/wPclF09XnDk" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </section>
-  
   <!-- Contact & Forms Section -->
   <section id="contact">
     <h2 class="section-title">Get in Touch</h2>
     <div class="form-container">
-      <form action="/submit" method="post">
+      <form action="#" method="post" id="contact-form-home">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name">
+        <input type="text" id="name" name="name" placeholder="Enter your name" style="padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required style="padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;">
         <input type="submit" value="Submit">
       </form>
+      <script>
+        document.getElementById('contact-form-home').onsubmit = function(e) {
+          e.preventDefault();
+          alert('Thank you! Your form has been submitted.');
+          this.reset();
+        };
+      </script>
     </div>
     <div class="form-container">
       <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="file">Upload a file:</label>
+        <label for="file">Upload a file: Feedback, Story, Image</label>
         <input type="file" id="file" name="file">
         <input type="submit" value="Upload">
       </form>
     </div>
   </section>
-  
   <!-- Footer -->
   <footer>
     <p>&copy; 2025 Swaad. All rights reserved.</p>
